@@ -1,0 +1,217 @@
+/* =========================================================
+   FICHA DE HERÓI — The Knight (Parte 1: HTML + CSS)
+   Organização: variáveis · base · cabeçalho · sobre ·
+   atributos · inventário · contato · rodapé · responsivo
+   ========================================================= */
+
+/* ---------- 1. VARIÁVEIS (paleta do universo: Vazio) ---------- */
+:root {
+  --fundo: #080c18;          /* preto-azulado do Abismo */
+  --painel: #0f1628;         /* fundo dos cards */
+  --borda: #2a3760;
+  --texto: #eef1fa;          /* contraste ~16:1 sobre o fundo (WCAG AAA) */
+  --texto-suave: #aab5d6;    /* contraste ~9:1 sobre o painel (WCAG AA) */
+  --destaque: #8fa9ff;       /* azul da Alma */
+  --comum: #aab5d6;
+  --raro: #6fa8ff;
+  --lendario: #ffd36b;
+  --raio: 12px;
+  --espaco: 1.25rem;
+  --fonte-titulo: "Cormorant Garamond", Georgia, serif;
+  --fonte-texto: "Jost", "Segoe UI", sans-serif;
+}
+
+/* ---------- 2. BASE ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  margin: 0;
+  font-family: var(--fonte-texto);
+  line-height: 1.6;
+  color: var(--texto);
+  background: radial-gradient(900px 500px at 80% -5%, #1a2650 0%, transparent 60%), var(--fundo);
+}
+ul { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, p { margin: 0; }
+a:focus-visible { outline: 3px solid var(--destaque); outline-offset: 3px; }
+
+.secao {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem var(--espaco);
+}
+.secao > h2 {
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--borda);
+}
+.secao > h2 i { color: var(--destaque); margin-right: 0.5rem; }
+
+/* ---------- 3. CABEÇALHO E MENU (Flexbox) ---------- */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 0.5rem var(--espaco);
+  background: rgba(8, 12, 24, 0.95);
+  border-bottom: 1px solid var(--borda);
+}
+.marca {
+  font-family: var(--fonte-titulo);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--texto);
+  text-decoration: none;
+}
+.menu { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem; }
+.menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;           /* área de toque adequada (Lei de Fitts) */
+  padding: 0 1rem;
+  color: var(--texto-suave);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+}
+.menu a:hover { color: var(--texto); border-color: var(--destaque); }
+
+/* ---------- 4. SOBRE O HERÓI ---------- */
+.sobre { display: grid; gap: 2rem; align-items: center; }
+.avatar {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1 / 1.3;
+  margin: 0 auto;
+  object-fit: cover;
+  border: 2px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: 0 0 40px rgba(111, 140, 255, 0.25);
+}
+.classe { color: var(--destaque); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.9rem; }
+h1 {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(3rem, 9vw, 5rem);   /* maior elemento da página: hierarquia */
+  line-height: 1.05;
+  margin: 0.2rem 0 0.8rem;
+}
+.citacao { font-family: var(--fonte-titulo); font-style: italic; font-size: 1.3rem; color: var(--texto-suave); margin-bottom: 1rem; }
+.dados { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.4rem 1rem; margin-top: 1.25rem; }
+.dados strong { color: var(--destaque); font-weight: 500; }
+
+/* ---------- 5. ATRIBUTOS & HABILIDADES ---------- */
+.grade-atributos { display: grid; gap: var(--espaco); }
+.grupo {
+  padding: var(--espaco);
+  background: var(--painel);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+}
+.grupo h3 { font-family: var(--fonte-titulo); font-size: 1.4rem; margin-bottom: 1rem; }
+.barra-atributo {
+  display: grid;
+  grid-template-columns: 1fr auto;     /* nome + valor; a barra fica logo abaixo (agrupamento) */
+  gap: 0.15rem 0.5rem;
+  margin-bottom: 0.8rem;
+}
+.barra-atributo span::before {
+  content: "◆";                        /* ícone decorativo via pseudo-elemento */
+  margin-right: 0.5rem;
+  font-size: 0.65rem;
+  color: var(--destaque);
+}
+.barra-atributo b { font-family: var(--fonte-titulo); font-size: 1.1rem; }
+.barra { grid-column: 1 / -1; height: 10px; background: #1b2644; border-radius: 99px; overflow: hidden; }
+.barra div {
+  height: 100%;
+  background: linear-gradient(90deg, #5470d8, #cfdcff);
+  border-radius: 99px;
+}
+
+/* ---------- 6. INVENTÁRIO & CONQUISTAS (Grid) ---------- */
+.grade-inventario { display: grid; grid-template-columns: 1fr; gap: var(--espaco); }
+.card-item {
+  position: relative;
+  padding: var(--espaco);
+  background: var(--painel);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  transition: background-color 0.3s, transform 0.3s, border-color 0.3s;
+}
+.card-item:hover { background-color: #19254a; transform: scale(1.03); border-color: var(--destaque); }
+.card-item::before {                    /* selo decorativo no canto do card */
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+.card-item img { margin-bottom: 0.75rem; border-radius: 50%; }
+.card-item h3 { font-family: var(--fonte-titulo); font-size: 1.4rem; }
+.card-item p { color: var(--texto-suave); }
+.raridade { display: inline-block; margin-bottom: 0.4rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+.comum { color: var(--comum); }
+.raro { color: var(--raro); }
+.lendario { color: var(--lendario); }
+.card-item h3, .card-item p { color: var(--texto); }
+.card-item p { color: var(--texto-suave); }
+.destaque {
+  background: linear-gradient(160deg, #1c2549, var(--painel));
+  border-color: var(--lendario);
+  box-shadow: 0 0 30px rgba(255, 211, 107, 0.15);
+}
+.icone-destaque { font-size: 3rem; margin-bottom: 0.5rem; }
+
+.subtitulo { margin: 2.5rem 0 1rem; font-family: var(--fonte-titulo); font-size: 1.5rem; }
+.conquistas { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; }
+.conquistas li { padding: 0.8rem 1rem; background: var(--painel); border: 1px solid var(--borda); border-radius: var(--raio); }
+.conquistas i { margin-right: 0.6rem; color: var(--lendario); }
+
+/* ---------- 7. CONTATO COM A GUILDA ---------- */
+.contato { text-align: center; }
+.contato > h2 { text-align: center; }
+.contato p { max-width: 560px; margin: 0 auto 1.5rem; color: var(--texto-suave); }
+.botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0 1.75rem;
+  font-weight: 500;
+  color: var(--texto);
+  text-decoration: none;
+  background: #243670;
+  border: 1px solid var(--destaque);
+  border-radius: 99px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.botao:hover { background-color: #3a52a8; transform: scale(1.05); }
+
+/* ---------- 8. RODAPÉ ---------- */
+.rodape { padding: 2rem var(--espaco); text-align: center; font-size: 0.9rem; color: var(--texto-suave); border-top: 1px solid var(--borda); }
+
+/* ---------- 9. RESPONSIVO (mobile first: 1 → 2 → 3 colunas) ---------- */
+@media (min-width: 640px) {            /* tablet: 2 colunas */
+  .grade-inventario { grid-template-columns: repeat(2, 1fr); }
+  .destaque { grid-column: 1 / -1; }
+  .grade-atributos { grid-template-columns: repeat(2, 1fr); }
+  .sobre { grid-template-columns: 280px 1fr; }
+}
+@media (min-width: 1024px) {           /* desktop: 3 colunas */
+  .grade-inventario { grid-template-columns: repeat(3, 1fr); }
+  .grade-atributos { grid-template-columns: repeat(3, 1fr); }
+  .sobre { grid-template-columns: 340px 1fr; gap: 3rem; }
+}
